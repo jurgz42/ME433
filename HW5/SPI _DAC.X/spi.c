@@ -23,7 +23,7 @@ void initSPI() {
     // setup SPI1
     SPI1CON = 0; // turn off the spi module and reset it
     SPI1BUF; // clear the rx buffer by reading from it
-    SPI1BRG = 1000; // 1000 for 24kHz, 1 for 12MHz; // baud rate to 10 MHz [SPI1BRG = (48000000/(2*desired))-1]
+    SPI1BRG = 100; // 1000 for 24kHz, 1 for 12MHz; // baud rate to 10 MHz [SPI1BRG = (48000000/(2*desired))-1]
     SPI1STATbits.SPIROV = 0; // clear the overflow bit
     SPI1CONbits.CKE = 1; // data changes when clock goes from hi to lo (since CKP is 0)
     SPI1CONbits.MSTEN = 1; // master operation
@@ -60,13 +60,13 @@ void send_spi(char a_or_b, unsigned char V) {
 
 //make sin function based on t
 unsigned char make_sin(float t, float freq) {
-    unsigned char x = (unsigned char) 127.5*sin(t*freq*8.65) + 127.5;// 255sin(t * frequency) + 255
+    unsigned char x = (unsigned char) 127.5*sin(t*freq*2*3.1415) + 127.5;// 255sin(t * frequency) + 255
     return x;
 }
 
 //make triangle function based on t
 unsigned char make_triangle(float t, float freq) {
-    float n = 1./2./freq/1.42; //when each peak should occur
+    float n = 1./2./freq; //when each peak should occur
     float m = t/n;    //
     unsigned char x;
     
